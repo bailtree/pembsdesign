@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title><?php echo $page->title; ?></title>
-		<link rel="stylesheet" type="text/css" href="<?php echo $config->urls->templates?>styles/main.css" />
-	</head>
-	<body>
-		<h1><?php echo $page->title; ?></h1>
-		<?php if($page->editable()) echo "<p><a href='$page->editURL'>Edit</a></p>"; ?>
-	</body>
-</html>
+<?php
+$headline = $page->get("headline|title");
+
+// bodycopy is body text plus comments
+$bodycopy = $page->body . $page->comments->render();
+$sidebar = $page->sidebar;
+
+// check if this page has any children
+if(count($page->children)) {
+  // render sub-navigation in sidebar
+  $sidebar .= "<ul class='nav'>";
+  foreach($page->children as $child) {
+    $sidebar .= "<li><a href='$child->url'>$child->title</a></li>";
+  }
+  $sidebar .= "</ul>";
+}
+
+include("./main.php");
