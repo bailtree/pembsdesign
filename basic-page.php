@@ -1,18 +1,20 @@
-<?php
-$headline = $page->get("headline|title");
+<?php 
 
-// bodycopy is body text plus comments
-$bodycopy = $page->body . $page->comments->render();
-$sidebar = $page->sidebar;
+// basic-page.php template file 
+// See README.txt for more information
 
-// check if this page has any children
-if(count($page->children)) {
-  // render sub-navigation in sidebar
-  $sidebar .= "<ul class='nav'>";
-  foreach($page->children as $child) {
-    $sidebar .= "<li><a href='$child->url'>$child->title</a></li>";
-  }
-  $sidebar .= "</ul>";
+// Primary content is the page's body copy
+$content = $page->body; 
+
+// If the page has children, then render navigation to them under the body.
+// See the _func.php for the renderNav example function.
+if($page->hasChildren) {
+	$content .= renderNav($page->children);
 }
 
-include("./main.php");
+// if the rootParent (section) page has more than 1 child, then render 
+// section navigation in the sidebar
+if($page->rootParent->hasChildren > 1) {
+	$sidebar = renderNavTree($page->rootParent, 3) . $page->sidebar; 
+}
+
