@@ -13,5 +13,9 @@ Template: Divi
 @import url("../Divi/style.css");
 /* =Theme customization starts here
 ------------------------------------------------------- */
-/* test comment on github */
-/* test from koi */
+.et_fixed_nav #logo {
+max-height: 75px;
+}
+.et-fixed-header #logo {
+max-height: 50px;
+}
